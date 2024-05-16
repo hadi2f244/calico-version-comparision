@@ -1,0 +1,1118 @@
+#############################################################
+################### Differences between v3.25.0 and v3.25.1:######################
+-           image: docker.io/calico/cni:v3.25.0
+
++           image: docker.io/calico/cni:v3.25.1
+
+-           image: docker.io/calico/cni:v3.25.0
+
++           image: docker.io/calico/cni:v3.25.1
+
+-           image: docker.io/calico/node:v3.25.0
+
++           image: docker.io/calico/node:v3.25.1
+
+-           image: docker.io/calico/node:v3.25.0
+
++           image: docker.io/calico/node:v3.25.1
+
+-           image: docker.io/calico/kube-controllers:v3.25.0
+
++           image: docker.io/calico/kube-controllers:v3.25.1
+
+#############################################################
+################### Differences between v3.25.1 and v3.25.2:######################
+-           image: docker.io/calico/cni:v3.25.1
+
++           image: docker.io/calico/cni:v3.25.2
+
+-           image: docker.io/calico/cni:v3.25.1
+
++           image: docker.io/calico/cni:v3.25.2
+
+-           image: docker.io/calico/node:v3.25.1
+
++           image: docker.io/calico/node:v3.25.2
+
+-           image: docker.io/calico/node:v3.25.1
+
++           image: docker.io/calico/node:v3.25.2
+
+-           image: docker.io/calico/kube-controllers:v3.25.1
+
++           image: docker.io/calico/kube-controllers:v3.25.2
+
+#############################################################
+################### Differences between v3.25.2 and v3.26.0:######################
++   namespace: kube-system
+
++ ---
+
++ # Source: calico/templates/calico-node.yaml
+
++ apiVersion: v1
+
++ kind: ServiceAccount
+
++ metadata:
+
++   name: calico-cni-plugin
+
++   annotations:
+
++     controller-gen.kubebuilder.io/version: (devel)
+
++   creationTimestamp: null
+
++   name: bgpfilters.crd.projectcalico.org
+
++ spec:
+
++   group: crd.projectcalico.org
+
++   names:
+
++     kind: BGPFilter
+
++     listKind: BGPFilterList
+
++     plural: bgpfilters
+
++     singular: bgpfilter
+
++   scope: Cluster
+
++   versions:
+
++   - name: v1
+
++     schema:
+
++       openAPIV3Schema:
+
++         properties:
+
++           apiVersion:
+
++             description: 'APIVersion defines the versioned schema of this representation
+
++               of an object. Servers should convert recognized schemas to the latest
+
++               internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+
++             type: string
+
++           kind:
+
++             description: 'Kind is a string value representing the REST resource this
+
++               object represents. Servers may infer this from the endpoint the client
+
++               submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+
++             type: string
+
++           metadata:
+
++             type: object
+
++           spec:
+
++             description: BGPFilterSpec contains the IPv4 and IPv6 filter rules of
+
++               the BGP Filter.
+
++             properties:
+
++               exportV4:
+
++                 description: The ordered set of IPv4 BGPFilter rules acting on exporting
+
++                   routes to a peer.
+
++                 items:
+
++                   description: BGPFilterRuleV4 defines a BGP filter rule consisting
+
++                     a single IPv4 CIDR block and a filter action for this CIDR.
+
++                   properties:
+
++                     action:
+
++                       type: string
+
++                     cidr:
+
++                       type: string
+
++                     matchOperator:
+
++                       type: string
+
++                   required:
+
++                   - action
+
++                   - cidr
+
++                   - matchOperator
+
++                   type: object
+
++                 type: array
+
++               exportV6:
+
++                 description: The ordered set of IPv6 BGPFilter rules acting on exporting
+
++                   routes to a peer.
+
++                 items:
+
++                   description: BGPFilterRuleV6 defines a BGP filter rule consisting
+
++                     a single IPv6 CIDR block and a filter action for this CIDR.
+
++                   properties:
+
++                     action:
+
++                       type: string
+
++                     cidr:
+
++                       type: string
+
++                     matchOperator:
+
++                       type: string
+
++                   required:
+
++                   - action
+
++                   - cidr
+
++                   - matchOperator
+
++                   type: object
+
++                 type: array
+
++               importV4:
+
++                 description: The ordered set of IPv4 BGPFilter rules acting on importing
+
++                   routes from a peer.
+
++                 items:
+
++                   description: BGPFilterRuleV4 defines a BGP filter rule consisting
+
++                     a single IPv4 CIDR block and a filter action for this CIDR.
+
++                   properties:
+
++                     action:
+
++                       type: string
+
++                     cidr:
+
++                       type: string
+
++                     matchOperator:
+
++                       type: string
+
++                   required:
+
++                   - action
+
++                   - cidr
+
++                   - matchOperator
+
++                   type: object
+
++                 type: array
+
++               importV6:
+
++                 description: The ordered set of IPv6 BGPFilter rules acting on importing
+
++                   routes from a peer.
+
++                 items:
+
++                   description: BGPFilterRuleV6 defines a BGP filter rule consisting
+
++                     a single IPv6 CIDR block and a filter action for this CIDR.
+
++                   properties:
+
++                     action:
+
++                       type: string
+
++                     cidr:
+
++                       type: string
+
++                     matchOperator:
+
++                       type: string
+
++                   required:
+
++                   - action
+
++                   - cidr
+
++                   - matchOperator
+
++                   type: object
+
++                 type: array
+
++             type: object
+
++         type: object
+
++     served: true
+
++     storage: true
+
++ status:
+
++   acceptedNames:
+
++     kind: ""
+
++     plural: ""
+
++   conditions: []
+
++   storedVersions: []
+
++ ---
+
++ # Source: calico/templates/kdd-crds.yaml
+
++ apiVersion: apiextensions.k8s.io/v1
+
++ kind: CustomResourceDefinition
+
++ metadata:
+
++               filters:
+
++                 description: The ordered set of BGPFilters applied on this BGP peer.
+
++                 items:
+
++                   type: string
+
++                 type: array
+
++               bpfDSROptoutCIDRs:
+
++                 description: BPFDSROptoutCIDRs is a list of CIDRs which are excluded
+
++                   from DSR. That is, clients in those CIDRs will accesses nodeports
+
++                   as if BPFExternalServiceMode was set to Tunnel.
+
++                 items:
+
++                   type: string
+
++                 type: array
+
+-                   Strict]'
+
++                   Loose]'
+
+-                   of individual subcomponents to be overriden.  This is useful for
+
++                   of individual subcomponents to be overridden.  This is useful for
+
++                 type: string
+
++               iptablesFilterDenyAction:
+
++                 description: IptablesFilterDenyAction controls what happens to traffic
+
++                   that is denied by network policy. By default Calico blocks traffic
+
++                   with an iptables "DROP" action. If you want to use "REJECT" action
+
++                   instead you can configure it in here.
+
+-       - calico-node
+
++       - calico-cni-plugin
+
+-       - watch 
+
++       - watch
+
++       - bgpfilters
+
++ # Source: calico/templates/calico-node-rbac.yaml
+
++ # CNI cluster role
+
++ kind: ClusterRole
+
++ apiVersion: rbac.authorization.k8s.io/v1
+
++ metadata:
+
++   name: calico-cni-plugin
+
++ rules:
+
++   - apiGroups: [""]
+
++     resources:
+
++       - pods
+
++       - nodes
+
++       - namespaces
+
++     verbs:
+
++       - get
+
++   - apiGroups: [""]
+
++     resources:
+
++       - pods/status
+
++     verbs:
+
++       - patch
+
++   - apiGroups: ["crd.projectcalico.org"]
+
++     resources:
+
++       - blockaffinities
+
++       - ipamblocks
+
++       - ipamhandles
+
++       - clusterinformations
+
++       - ippools
+
++       - ipreservations
+
++       - ipamconfigs
+
++     verbs:
+
++       - get
+
++       - list
+
++       - create
+
++       - update
+
++       - delete
+
++ ---
+
++   namespace: kube-system
+
++ ---
+
++ # Source: calico/templates/calico-node-rbac.yaml
+
++ apiVersion: rbac.authorization.k8s.io/v1
+
++ kind: ClusterRoleBinding
+
++ metadata:
+
++   name: calico-cni-plugin
+
++ roleRef:
+
++   apiGroup: rbac.authorization.k8s.io
+
++   kind: ClusterRole
+
++   name: calico-cni-plugin
+
++ subjects:
+
++ - kind: ServiceAccount
+
++   name: calico-cni-plugin
+
+-           image: docker.io/calico/cni:v3.25.2
+
++           image: docker.io/calico/cni:v3.26.0
+
+-           image: docker.io/calico/cni:v3.25.2
+
++           image: docker.io/calico/cni:v3.26.0
+
+-           image: docker.io/calico/node:v3.25.2
+
++           image: docker.io/calico/node:v3.26.0
+
+-           image: docker.io/calico/node:v3.25.2
+
++           image: docker.io/calico/node:v3.26.0
+
+-           image: docker.io/calico/kube-controllers:v3.25.2
+
++           image: docker.io/calico/kube-controllers:v3.26.0
+
+#############################################################
+################### Differences between v3.26.0 and v3.26.1:######################
+-           image: docker.io/calico/cni:v3.26.0
+
++           image: docker.io/calico/cni:v3.26.1
+
+-           image: docker.io/calico/cni:v3.26.0
+
++           image: docker.io/calico/cni:v3.26.1
+
+-           image: docker.io/calico/node:v3.26.0
+
++           image: docker.io/calico/node:v3.26.1
+
+-           image: docker.io/calico/node:v3.26.0
+
++           image: docker.io/calico/node:v3.26.1
+
+-           image: docker.io/calico/kube-controllers:v3.26.0
+
++           image: docker.io/calico/kube-controllers:v3.26.1
+
+#############################################################
+################### Differences between v3.26.1 and v3.26.2:######################
+-           image: docker.io/calico/cni:v3.26.1
+
++           image: docker.io/calico/cni:v3.26.2
+
+-           image: docker.io/calico/cni:v3.26.1
+
++           image: docker.io/calico/cni:v3.26.2
+
+-           image: docker.io/calico/node:v3.26.1
+
++           image: docker.io/calico/node:v3.26.2
+
+-           image: docker.io/calico/node:v3.26.1
+
++           image: docker.io/calico/node:v3.26.2
+
+-           image: docker.io/calico/kube-controllers:v3.26.1
+
++           image: docker.io/calico/kube-controllers:v3.26.2
+
+#############################################################
+################### Differences between v3.26.2 and v3.26.3:######################
+-           image: docker.io/calico/cni:v3.26.2
+
++           image: docker.io/calico/cni:v3.26.3
+
+-           image: docker.io/calico/cni:v3.26.2
+
++           image: docker.io/calico/cni:v3.26.3
+
+-           image: docker.io/calico/node:v3.26.2
+
++           image: docker.io/calico/node:v3.26.3
+
+-           image: docker.io/calico/node:v3.26.2
+
++           image: docker.io/calico/node:v3.26.3
+
+-           image: docker.io/calico/kube-controllers:v3.26.2
+
++           image: docker.io/calico/kube-controllers:v3.26.3
+
+#############################################################
+################### Differences between v3.26.3 and v3.26.4:######################
+-           image: docker.io/calico/cni:v3.26.3
+
++           image: docker.io/calico/cni:v3.26.4
+
+-           image: docker.io/calico/cni:v3.26.3
+
++           image: docker.io/calico/cni:v3.26.4
+
+-           image: docker.io/calico/node:v3.26.3
+
++           image: docker.io/calico/node:v3.26.4
+
+-           image: docker.io/calico/node:v3.26.3
+
++           image: docker.io/calico/node:v3.26.4
+
+-           image: docker.io/calico/kube-controllers:v3.26.3
+
++           image: docker.io/calico/kube-controllers:v3.26.4
+
+#############################################################
+################### Differences between v3.26.4 and v3.27.0:######################
++                     interface:
+
++                       type: string
+
++                       type: string
+
++                     source:
+
+-                   - cidr
+
+-                   - matchOperator
+
++                     interface:
+
++                       type: string
+
++                       type: string
+
++                     source:
+
+-                   - cidr
+
+-                   - matchOperator
+
++                     interface:
+
++                       type: string
+
++                       type: string
+
++                     source:
+
+-                   - cidr
+
+-                   - matchOperator
+
++                     interface:
+
++                       type: string
+
++                       type: string
+
++                     source:
+
+-                   - cidr
+
+-                   - matchOperator
+
++               bpfCTLBLogFilter:
+
++                 description: 'BPFCTLBLogFilter specifies, what is logged by connect
+
++                   time load balancer when BPFLogLevel is debug. Currently has to be
+
++                   specified as ''all'' when BPFLogFilters is set to see CTLB logs.
+
++                   [Default: unset - means logs are emitted when BPFLogLevel id debug
+
++                   and BPFLogFilters not set.]'
+
++                 type: string
+
++               bpfConnectTimeLoadBalancing:
+
++                 description: 'BPFConnectTimeLoadBalancing when in BPF mode, controls
+
++                   whether Felix installs the connect-time load balancer. The connect-time
+
++                   load balancer is required for the host to be able to reach Kubernetes
+
++                   services and it improves the performance of pod-to-service connections.When
+
++                   set to TCP, connect time load balancing is available only for services
+
++                   with TCP ports. [Default: TCP]'
+
++                 enum:
+
++                 - TCP
+
++                 - Enabled
+
++                 - Disabled
+
++                 type: string
+
+-                   connections.  The only reason to disable it is for debugging purposes.  [Default:
+
++                   connections.  The only reason to disable it is for debugging purposes.
+
++                   This will be deprecated. Use BPFConnectTimeLoadBalancing [Default:
+
++               bpfDisableGROForIfaces:
+
++                 description: BPFDisableGROForIfaces is a regular expression that controls
+
++                   which interfaces Felix should disable the Generic Receive Offload
+
++                   [GRO] option.  It should not match the workload interfaces (usually
+
++                   named cali...).
+
++                 type: string
+
++                 pattern: ^(?i)(Disabled|Strict|Loose)?$
+
++                 pattern: ^(?i)(Tunnel|DSR)?$
+
++                 type: string
+
++               bpfForceTrackPacketsFromIfaces:
+
++                 description: 'BPFForceTrackPacketsFromIfaces in BPF mode, forces traffic
+
++                   from these interfaces to skip Calico''s iptables NOTRACK rule, allowing
+
++                   traffic from those interfaces to be tracked by Linux conntrack.  Should
+
++                   only be used for interfaces that are not used for the Calico fabric.  For
+
++                   example, a docker bridge device for non-Calico-networked containers.
+
++                   [Default: docker+]'
+
++                 items:
+
+-                 type: string
+
++                   type: string
+
++                 type: array
+
++               bpfHostNetworkedNATWithoutCTLB:
+
++                 description: 'BPFHostNetworkedNATWithoutCTLB when in BPF mode, controls
+
++                   whether Felix does a NAT without CTLB. This along with BPFConnectTimeLoadBalancing
+
++                   determines the CTLB behavior. [Default: Enabled]'
+
++                 enum:
+
++                 - Enabled
+
++                 - Disabled
+
++                 type: string
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++               bpfLogFilters:
+
++                 additionalProperties:
+
++                   type: string
+
++                 description: "BPFLogFilters is a map of key=values where the value
+
++                   is a pcap filter expression and the key is an interface name with
+
++                   'all' denoting all interfaces, 'weps' all workload endpoints and
+
++                   'heps' all host endpoints. \n When specified as an env var, it accepts
+
++                   a comma-separated list of key=values. [Default: unset - means all
+
++                   debug logs are emitted]"
+
++                 type: object
+
++                 pattern: ^(?i)(Off|Info|Debug)?$
+
++                 pattern: ^(?i)(insert|append)?$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^(?i)(Drop|Accept|Return)?$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^([a-zA-Z0-9-_]+=(true|false|),)*([a-zA-Z0-9-_]+=(true|false|))?$
+
++                 pattern: ^([a-zA-Z0-9-_]+=([^=]+),)*([a-zA-Z0-9-_]+=([^=]+))?$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^(?i)(Auto|FelixConfiguration|FelixConfigurationList|Legacy|NFT)?$
+
++                 pattern: ^(?i)(Accept|Return)?$
+
++                 pattern: ^(?i)(Drop|Reject)?$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^(?i)(Accept|Return)?$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^(?i)(Debug|Info|Warning|Error|Fatal)?$
+
++                 pattern: ^(?i)(Debug|Info|Warning|Error|Fatal)?$
+
++                 pattern: ^(?i)(Debug|Info|Warning|Error|Fatal)?$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^(?i)(WorkloadIPs|CalicoIPAM)?$
+
++                 pattern: ^(?i)(Drop|Reject|Disabled)?$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++               windowsManageFirewallRules:
+
++                 description: 'WindowsManageFirewallRules configures whether or not
+
++                   Felix will program Windows Firewall rules. (to allow inbound access
+
++                   to its own metrics ports) [Default: Disabled]'
+
++                 enum:
+
++                 - Enabled
+
++                 - Disabled
+
++                 type: string
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 pattern: ^(?i)(Disabled|Any)?$
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++               performanceHints:
+
++                 description: "PerformanceHints contains a list of hints to Calico's
+
++                   policy engine to help process the policy more efficiently.  Hints
+
++                   never change the enforcement behaviour of the policy. \n Currently,
+
++                   the only available hint is \"AssumeNeededOnEveryNode\".  When that
+
++                   hint is set on a policy, Felix will act as if the policy matches
+
++                   a local endpoint even if it does not. This is useful for \"preloading\"
+
++                   any large static policies that are known to be used on every node.
+
++                   If the policy is _not_ used on a particular node then the work done
+
++                   to preload the policy (and to maintain it) is wasted."
+
++                 items:
+
++                   type: string
+
++                 type: array
+
++               performanceHints:
+
++                 description: "PerformanceHints contains a list of hints to Calico's
+
++                   policy engine to help process the policy more efficiently.  Hints
+
++                   never change the enforcement behaviour of the policy. \n Currently,
+
++                   the only available hint is \"AssumeNeededOnEveryNode\".  When that
+
++                   hint is set on a policy, Felix will act as if the policy matches
+
++                   a local endpoint even if it does not. This is useful for \"preloading\"
+
++                   any large static policies that are known to be used on every node.
+
++                   If the policy is _not_ used on a particular node then the work done
+
++                   to preload the policy (and to maintain it) is wasted."
+
++                 items:
+
++                   type: string
+
++                 type: array
+
+-           image: docker.io/calico/cni:v3.26.4
+
++           image: docker.io/calico/cni:v3.27.0
+
+-           image: docker.io/calico/cni:v3.26.4
+
++           image: docker.io/calico/cni:v3.27.0
+
+-           image: docker.io/calico/node:v3.26.4
+
++           image: docker.io/calico/node:v3.27.0
+
+-           image: docker.io/calico/node:v3.26.4
+
++           image: docker.io/calico/node:v3.27.0
+
+-           image: docker.io/calico/kube-controllers:v3.26.4
+
++           image: docker.io/calico/kube-controllers:v3.27.0
+
+#############################################################
+################### Differences between v3.27.0 and v3.27.2:######################
++               bpfExcludeCIDRsFromNAT:
+
++                 description: BPFExcludeCIDRsFromNAT is a list of CIDRs that are to
+
++                   be excluded from NAT resolution so that host can handle them. A
+
++                   typical usecase is node local DNS cache.
+
++                 items:
+
++                   type: string
+
++                 type: array
+
+-           image: docker.io/calico/cni:v3.27.0
+
++           image: docker.io/calico/cni:v3.27.2
+
+-           image: docker.io/calico/cni:v3.27.0
+
++           image: docker.io/calico/cni:v3.27.2
+
+-           image: docker.io/calico/node:v3.27.0
+
++           image: docker.io/calico/node:v3.27.2
+
+-           image: docker.io/calico/node:v3.27.0
+
++           image: docker.io/calico/node:v3.27.2
+
+-           image: docker.io/calico/kube-controllers:v3.27.0
+
++           image: docker.io/calico/kube-controllers:v3.27.2
+
+#############################################################
+################### Differences between v3.27.2 and v3.27.3:######################
+-           image: docker.io/calico/cni:v3.27.2
+
++           image: docker.io/calico/cni:v3.27.3
+
+-           image: docker.io/calico/cni:v3.27.2
+
++           image: docker.io/calico/cni:v3.27.3
+
+-           image: docker.io/calico/node:v3.27.2
+
++           image: docker.io/calico/node:v3.27.3
+
+-           image: docker.io/calico/node:v3.27.2
+
++           image: docker.io/calico/node:v3.27.3
+
+-           image: docker.io/calico/kube-controllers:v3.27.2
+
++           image: docker.io/calico/kube-controllers:v3.27.3
+
+#############################################################
+################### Differences between v3.27.3 and v3.28.0:######################
+-                   and should only be used if absolutely necesssary.
+
++                   and should only be used if absolutely necessary.
+
+-                 description: BPFKubeProxyEndpointSlicesEnabled in BPF mode, controls
+
++                 description: BPFKubeProxyEndpointSlicesEnabled is deprecated and has
+
+-                   whether Felix's embedded kube-proxy accepts EndpointSlices or not.
+
++                   no effect. BPF kube-proxy always accepts endpoint slices. This option
+
++                   will be removed in the next release.
+
++               debugHost:
+
++                 description: DebugHost is the host IP or hostname to bind the debug
+
++                   port to.  Only used if DebugPort is set. [Default:localhost]
+
++                 type: string
+
++               debugPort:
+
++                 description: DebugPort if set, enables Felix's debug HTTP port, which
+
++                   allows memory and CPU profiles to be retrieved.  The debug port
+
++                   is not secure, it should not be exposed to the internet.
+
++                 type: integer
+
++                 pattern: ^([0-9]+(\\.[0-9]+)?(ms|s|m|h))*$
+
++                 type: string
+
++               debugSimulateDataplaneApplyDelay:
+
++               endpointStatusPathPrefix:
+
++                 description: "EndpointStatusPathPrefix is the path to the directory
+
++                   where endpoint status will be written. Endpoint status file reporting
+
++                   is disabled if field is left empty. \n Chosen directory should match
+
++                   the directory used by the CNI for PodStartupDelay. [Default: \"\"]"
+
++                 type: string
+
+-                   nova-api-metadata). A value of none (case insensitive) means that
+
++                   nova-api-metadata). A value of none (case-insensitive) means that
+
+-                 description: "The selector is an expression used to pick pick out
+
++                 description: "The selector is an expression used to pick out the endpoints
+
+-                   the endpoints that the policy should be applied to. \n Selector
+
++                   that the policy should be applied to. \n Selector expressions follow
+
+-                   expressions follow this syntax: \n \tlabel == \"string_literal\"
+
++                   this syntax: \n \tlabel == \"string_literal\"  ->  comparison, e.g.
+
+-                   \ ->  comparison, e.g. my_label == \"foo bar\" \tlabel != \"string_literal\"
+
++                   my_label == \"foo bar\" \tlabel != \"string_literal\"   ->  not
+
+-                   \  ->  not equal; also matches if label is not present \tlabel in
+
++                   equal; also matches if label is not present \tlabel in { \"a\",
+
+-                   { \"a\", \"b\", \"c\", ... }  ->  true if the value of label X is
+
++                   \"b\", \"c\", ... }  ->  true if the value of label X is one of
+
+-                   one of \"a\", \"b\", \"c\" \tlabel not in { \"a\", \"b\", \"c\",
+
++                   \"a\", \"b\", \"c\" \tlabel not in { \"a\", \"b\", \"c\", ... }
+
+-                   ... }  ->  true if the value of label X is not one of \"a\", \"b\",
+
++                   \ ->  true if the value of label X is not one of \"a\", \"b\", \"c\"
+
+-                   \"c\" \thas(label_name)  -> True if that label is present \t! expr
+
++                   \thas(label_name)  -> True if that label is present \t! expr ->
+
+-                   -> negation of expr \texpr && expr  -> Short-circuit and \texpr
+
++                   negation of expr \texpr && expr  -> Short-circuit and \texpr ||
+
+-                   || expr  -> Short-circuit or \t( expr ) -> parens for grouping \tall()
+
++                   expr  -> Short-circuit or \t( expr ) -> parens for grouping \tall()
+
+-                 description: "The selector is an expression used to pick pick out
+
++                 description: "The selector is an expression used to pick out the endpoints
+
+-                   the endpoints that the policy should be applied to. \n Selector
+
++                   that the policy should be applied to. \n Selector expressions follow
+
+-                   expressions follow this syntax: \n \tlabel == \"string_literal\"
+
++                   this syntax: \n \tlabel == \"string_literal\"  ->  comparison, e.g.
+
+-                   \ ->  comparison, e.g. my_label == \"foo bar\" \tlabel != \"string_literal\"
+
++                   my_label == \"foo bar\" \tlabel != \"string_literal\"   ->  not
+
+-                   \  ->  not equal; also matches if label is not present \tlabel in
+
++                   equal; also matches if label is not present \tlabel in { \"a\",
+
+-                   { \"a\", \"b\", \"c\", ... }  ->  true if the value of label X is
+
++                   \"b\", \"c\", ... }  ->  true if the value of label X is one of
+
+-                   one of \"a\", \"b\", \"c\" \tlabel not in { \"a\", \"b\", \"c\",
+
++                   \"a\", \"b\", \"c\" \tlabel not in { \"a\", \"b\", \"c\", ... }
+
+-                   ... }  ->  true if the value of label X is not one of \"a\", \"b\",
+
++                   \ ->  true if the value of label X is not one of \"a\", \"b\", \"c\"
+
+-                   \"c\" \thas(label_name)  -> True if that label is present \t! expr
+
++                   \thas(label_name)  -> True if that label is present \t! expr ->
+
+-                   -> negation of expr \texpr && expr  -> Short-circuit and \texpr
+
++                   negation of expr \texpr && expr  -> Short-circuit and \texpr ||
+
+-                   || expr  -> Short-circuit or \t( expr ) -> parens for grouping \tall()
+
++                   expr  -> Short-circuit or \t( expr ) -> parens for grouping \tall()
+
+-   - apiGroups: [ "crd.projectcalico.org" ]
+
++   - apiGroups: ["crd.projectcalico.org"]
+
+-           image: docker.io/calico/cni:v3.27.3
+
++           image: docker.io/calico/cni:v3.28.0
+
+-           image: docker.io/calico/cni:v3.27.3
+
++           image: docker.io/calico/cni:v3.28.0
+
+-           image: docker.io/calico/node:v3.27.3
+
++           image: docker.io/calico/node:v3.28.0
+
+-           image: docker.io/calico/node:v3.27.3
+
++           image: docker.io/calico/node:v3.28.0
+
+-           image: docker.io/calico/kube-controllers:v3.27.3
+
++           image: docker.io/calico/kube-controllers:v3.28.0
+
