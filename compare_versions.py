@@ -2,9 +2,11 @@ import os
 import difflib
 from packaging import version
 
+excluded_dirs = [".git"]
+
 def get_sorted_versions(directory):
     # Get all directories and sort them by version
-    versions = [dir for dir in os.listdir(directory) if os.path.isdir(os.path.join(directory, dir))]
+    versions = [dir for dir in os.listdir(directory) if os.path.isdir(os.path.join(directory, dir)) and dir.strip() not in excluded_dirs ]
     versions.sort(key=lambda ver: version.parse(ver.lstrip('v')))
     return versions
 

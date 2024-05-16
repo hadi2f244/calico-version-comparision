@@ -1,4 +1,785 @@
 #############################################################
+################### Differences between v3.23.0 and v3.24.0:######################
++ ---
+
++ # Source: calico/templates/calico-kube-controllers.yaml
+
++ # This manifest creates a Pod Disruption Budget for Controller to allow K8s Cluster Autoscaler to evict
+
++ 
+
++ apiVersion: policy/v1
+
++ kind: PodDisruptionBudget
+
++ metadata:
+
++   name: calico-kube-controllers
+
++   namespace: kube-system
+
++   labels:
+
++     k8s-app: calico-kube-controllers
+
++ spec:
+
++   maxUnavailable: 1
+
++   selector:
+
++     matchLabels:
+
++       k8s-app: calico-kube-controllers
+
++ ---
+
++ # Source: calico/templates/calico-kube-controllers.yaml
+
++ apiVersion: v1
+
++ kind: ServiceAccount
+
++ metadata:
+
++   name: calico-kube-controllers
+
++   namespace: kube-system
+
++ ---
+
++ # Source: calico/templates/calico-node.yaml
+
++ apiVersion: v1
+
++ kind: ServiceAccount
+
++ metadata:
+
++   name: calico-node
+
++   namespace: kube-system
+
+- 
+
+- 
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+-                   are routed within the host and how is routing intepreted by RPF
+
++                   are routed within the host and how is routing interpreted by RPF
+
+-               bpfHostConntrackBypass:
+
+-                 description: 'BPFHostConntrackBypass Controls whether to bypass Linux
+
+-                   conntrack in BPF mode for workloads and services. [Default: true
+
+-                   - bypass Linux conntrack]'
+
+-                 type: boolean
+
++                 type: integer
+
++               bpfMapSizeIfState:
+
++                 description: BPFMapSizeIfState sets the size for ifstate map.  The
+
++                   ifstate map must be large enough to hold an entry for each device
+
++                   (host + workloads) on a host.
+
++               bpfPolicyDebugEnabled:
+
++                 description: BPFPolicyDebugEnabled when true, Felix records detailed
+
++                   information about the BPF policy programs, which can be examined
+
++                   with the calico-bpf command-line tool.
+
++                 type: boolean
+
++               routeSyncDisabled:
+
++                 description: RouteSyncDisabled will disable all operations performed
+
++                   on the route table. Set to true to run in network-policy mode only.
+
++                 type: boolean
+
+-                   VXLAN tunnel device for IPv4 VXLAN networking. Optional as Felix
+
++                   VXLAN tunnel device for VXLAN networking. Optional as Felix determines
+
+-                   determines this based on the existing IP pools. [Default: nil (unset)]'
+
++                   this based on the existing IP pools. [Default: nil (unset)]'
+
+-                 description: 'WireguardEnabled controls whether Wireguard is enabled.
+
++                 description: 'WireguardEnabled controls whether Wireguard is enabled
+
++                   for IPv4 (encapsulating IPv4 traffic over an IPv4 underlay network).
+
++                   [Default: false]'
+
++                 type: boolean
+
++               wireguardEnabledV6:
+
++                 description: 'WireguardEnabledV6 controls whether Wireguard is enabled
+
++                   for IPv6 (encapsulating IPv6 traffic over an IPv6 underlay network).
+
++                   the IPv4 Wireguard interface. [Default: wireguard.cali]'
+
++                 type: string
+
++               wireguardInterfaceNameV6:
+
++                 description: 'WireguardInterfaceNameV6 specifies the name to use for
+
+-                   the Wireguard interface. [Default: wg.calico]'
+
++                   the IPv6 Wireguard interface. [Default: wg-v6.cali]'
+
+-                   by Wireguard. [Default: 51820]'
+
++                   by IPv4 Wireguard. [Default: 51820]'
+
++                 type: integer
+
++               wireguardListeningPortV6:
+
++                 description: 'WireguardListeningPortV6 controls the listening port
+
++                   used by IPv6 Wireguard. [Default: 51821]'
+
+-                 description: 'WireguardMTU controls the MTU on the Wireguard interface.
+
++                 description: 'WireguardMTU controls the MTU on the IPv4 Wireguard
+
++                   interface. See Configuring MTU [Default: 1440]'
+
++                 type: integer
+
++               wireguardMTUV6:
+
++                 description: 'WireguardMTUV6 controls the MTU on the IPv6 Wireguard
+
+-                   See Configuring MTU [Default: 1420]'
+
++                   interface. See Configuring MTU [Default: 1420]'
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
++                 maximum: 2147483647
+
++                 minimum: 0
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
++ # Source: calico/templates/kdd-crds.yaml
+
++   preserveUnknownFields: false
+
+- 
+
+- ---
+
+- 
+
+- ---
+
+- kind: ClusterRoleBinding
+
+- apiVersion: rbac.authorization.k8s.io/v1
+
+- metadata:
+
+-   name: calico-kube-controllers
+
+- roleRef:
+
+-   apiGroup: rbac.authorization.k8s.io
+
+-   kind: ClusterRole
+
+-   name: calico-kube-controllers
+
+- subjects:
+
+- - kind: ServiceAccount
+
+-   name: calico-kube-controllers
+
+-   namespace: kube-system
+
+- ---
+
+- 
+
++   # The CNI plugin and calico/node need to be able to create a default
+
++   # IPAMConfiguration
+
++       - create
+
+- 
+
++ # Source: calico/templates/calico-kube-controllers-rbac.yaml
+
++ kind: ClusterRoleBinding
+
++ apiVersion: rbac.authorization.k8s.io/v1
+
++ metadata:
+
++   name: calico-kube-controllers
+
++ roleRef:
+
++   apiGroup: rbac.authorization.k8s.io
+
++   kind: ClusterRole
+
++   name: calico-kube-controllers
+
++ subjects:
+
++ - kind: ServiceAccount
+
++   name: calico-kube-controllers
+
++   namespace: kube-system
+
++ ---
+
++ # Source: calico/templates/calico-node-rbac.yaml
+
+- 
+
+-           image: docker.io/calico/cni:v3.23.5
+
++           image: docker.io/calico/cni:v3.24.0
+
++           imagePullPolicy: IfNotPresent
+
+-           image: docker.io/calico/cni:v3.23.5
+
++           image: docker.io/calico/cni:v3.24.0
+
++           imagePullPolicy: IfNotPresent
+
+-           image: docker.io/calico/node:v3.23.5
+
++           image: docker.io/calico/node:v3.24.0
+
++           imagePullPolicy: IfNotPresent
+
+-           image: docker.io/calico/node:v3.23.5
+
++           image: docker.io/calico/node:v3.24.0
+
++           imagePullPolicy: IfNotPresent
+
+- 
+
+- apiVersion: v1
+
+- kind: ServiceAccount
+
+- metadata:
+
+-   name: calico-node
+
+-   namespace: kube-system
+
+- 
+
+- ---
+
++         - key: node-role.kubernetes.io/control-plane
+
++           effect: NoSchedule
+
+-           image: docker.io/calico/kube-controllers:v3.23.5
+
++           image: docker.io/calico/kube-controllers:v3.24.0
+
++           imagePullPolicy: IfNotPresent
+
+- 
+
+- ---
+
+- 
+
+- apiVersion: v1
+
+- kind: ServiceAccount
+
+- metadata:
+
+-   name: calico-kube-controllers
+
+-   namespace: kube-system
+
+- 
+
+- ---
+
+- 
+
+- # This manifest creates a Pod Disruption Budget for Controller to allow K8s Cluster Autoscaler to evict
+
+- 
+
+- apiVersion: policy/v1
+
+- kind: PodDisruptionBudget
+
+- metadata:
+
+-   name: calico-kube-controllers
+
+-   namespace: kube-system
+
+-   labels:
+
+-     k8s-app: calico-kube-controllers
+
+- spec:
+
+-   maxUnavailable: 1
+
+-   selector:
+
+-     matchLabels:
+
+-       k8s-app: calico-kube-controllers
+
+- 
+
+- ---
+
+- # Source: calico/templates/calico-etcd-secrets.yaml
+
+- 
+
+- ---
+
+- # Source: calico/templates/calico-typha.yaml
+
+- 
+
+- ---
+
+- # Source: calico/templates/configure-canal.yaml
+
+- 
+
+- 
+
+#############################################################
+################### Differences between v3.24.0 and v3.24.1:######################
+-           image: docker.io/calico/cni:v3.24.0
+
++           image: docker.io/calico/cni:v3.24.1
+
+-           image: docker.io/calico/cni:v3.24.0
+
++           image: docker.io/calico/cni:v3.24.1
+
+-           image: docker.io/calico/node:v3.24.0
+
++           image: docker.io/calico/node:v3.24.1
+
+-           image: docker.io/calico/node:v3.24.0
+
++           image: docker.io/calico/node:v3.24.1
+
+-           image: docker.io/calico/kube-controllers:v3.24.0
+
++           image: docker.io/calico/kube-controllers:v3.24.1
+
+#############################################################
+################### Differences between v3.24.1 and v3.24.2:######################
++               bpfHostConntrackBypass:
+
++                 description: 'BPFHostConntrackBypass Controls whether to bypass Linux
+
++                   conntrack in BPF mode for workloads and services. [Default: true
+
++                   - bypass Linux conntrack]'
+
++                 type: boolean
+
+-                   VXLAN tunnel device for VXLAN networking. Optional as Felix determines
+
++                   VXLAN tunnel device for IPv4 VXLAN networking. Optional as Felix
+
+-                   this based on the existing IP pools. [Default: nil (unset)]'
+
++                   determines this based on the existing IP pools. [Default: nil (unset)]'
+
+-                 description: When nat-outgoing is true, packets sent from Calico networked
+
++                 description: When natOutgoing is true, packets sent from Calico networked
+
+-           image: docker.io/calico/cni:v3.24.1
+
++           image: docker.io/calico/cni:v3.24.2
+
+-           image: docker.io/calico/cni:v3.24.1
+
++           image: docker.io/calico/cni:v3.24.2
+
+-           image: docker.io/calico/node:v3.24.1
+
++           image: docker.io/calico/node:v3.24.2
+
+-           image: docker.io/calico/node:v3.24.1
+
++           image: docker.io/calico/node:v3.24.2
+
+-           image: docker.io/calico/kube-controllers:v3.24.1
+
++           image: docker.io/calico/kube-controllers:v3.24.2
+
+#############################################################
+################### Differences between v3.24.2 and v3.24.3:######################
+-           image: docker.io/calico/cni:v3.24.2
+
++           image: docker.io/calico/cni:v3.24.3
+
+-           image: docker.io/calico/cni:v3.24.2
+
++           image: docker.io/calico/cni:v3.24.3
+
+-           image: docker.io/calico/node:v3.24.2
+
++           image: docker.io/calico/node:v3.24.3
+
+-           image: docker.io/calico/node:v3.24.2
+
++           image: docker.io/calico/node:v3.24.3
+
+-           image: docker.io/calico/kube-controllers:v3.24.2
+
++           image: docker.io/calico/kube-controllers:v3.24.3
+
+#############################################################
+################### Differences between v3.24.3 and v3.24.4:######################
+-           image: docker.io/calico/cni:v3.24.3
+
++           image: docker.io/calico/cni:v3.24.4
+
+-           image: docker.io/calico/cni:v3.24.3
+
++           image: docker.io/calico/cni:v3.24.4
+
+-           image: docker.io/calico/node:v3.24.3
+
++           image: docker.io/calico/node:v3.24.4
+
+-           image: docker.io/calico/node:v3.24.3
+
++           image: docker.io/calico/node:v3.24.4
+
+-           image: docker.io/calico/kube-controllers:v3.24.3
+
++           image: docker.io/calico/kube-controllers:v3.24.4
+
+#############################################################
+################### Differences between v3.24.4 and v3.24.5:######################
+-           image: docker.io/calico/cni:v3.24.4
+
++           image: docker.io/calico/cni:v3.24.5
+
+-           image: docker.io/calico/cni:v3.24.4
+
++           image: docker.io/calico/cni:v3.24.5
+
+-           image: docker.io/calico/node:v3.24.4
+
++           image: docker.io/calico/node:v3.24.5
+
+-           image: docker.io/calico/node:v3.24.4
+
++           image: docker.io/calico/node:v3.24.5
+
+-           image: docker.io/calico/kube-controllers:v3.24.4
+
++           image: docker.io/calico/kube-controllers:v3.24.5
+
+#############################################################
+################### Differences between v3.24.5 and v3.24.6:######################
+No differences found.
+#############################################################
+################### Differences between v3.24.6 and v3.25.0:######################
++                 type: array
+
++               ignoredInterfaces:
+
++                 description: IgnoredInterfaces indicates the network interfaces that
+
++                   needs to be excluded when reading device routes.
+
++                 items:
+
++                   type: string
+
++               reachableBy:
+
++                 description: Add an exact, i.e. /32, static route toward peer IP in
+
++                   order to prevent route flapping. ReachableBy contains the address
+
++                   of the gateway which peer can be reached by.
+
++                 type: string
+
++               ttlSecurity:
+
++                 description: TTLSecurity enables the generalized TTL security mechanism
+
++                   (GTSM) which protects against spoofed packets by ignoring received
+
++                   packets with a smaller than expected TTL value. The provided value
+
++                   is the number of hops (edges) between the peers.
+
++                 type: integer
+
+-                 description: 'BPFEnforceRPF enforce strict RPF on all interfaces with
+
++                 description: 'BPFEnforceRPF enforce strict RPF on all host interfaces
+
+-                   BPF programs regardless of what is the per-interfaces or global
+
++                   with BPF programs regardless of what is the per-interfaces or global
+
+-                   setting. Possible values are Disabled or Strict. [Default: Strict]'
+
++                   setting. Possible values are Disabled, Strict or Loose. [Default:
+
++                   Strict]'
+
++                 type: string
+
++               bpfL3IfacePattern:
+
++                 description: BPFL3IfacePattern is a regular expression that allows
+
++                   to list tunnel devices like wireguard or vxlan (i.e., L3 devices)
+
++                   in addition to BPFDataIfacePattern. That is, tunnel interfaces not
+
++                   created by Calico, that Calico workload traffic flows over as well
+
++                   as any interfaces that handle incoming traffic to nodeports and
+
++                   services from outside the cluster.
+
+-                 description: 'DataplaneWatchdogTimeout is the readiness/liveness timeout
+
++                 description: "DataplaneWatchdogTimeout is the readiness/liveness timeout
+
+-                   used for Felix''s (internal) dataplane driver. Increase this value
+
++                   used for Felix's (internal) dataplane driver. Increase this value
+
+-                   or non-ready more quickly. [Default: 90s]'
+
++                   or non-ready more quickly. [Default: 90s] \n Deprecated: replaced
+
++                   by the generic HealthTimeoutOverrides."
+
+-                 description: FeatureDetectOverride is used to override the feature
+
++                 description: FeatureDetectOverride is used to override feature detection
+
+-                   detection. Values are specified in a comma separated list with no
+
++                   based on auto-detected platform capabilities.  Values are specified
+
+-                   spaces, example; "SNATFullyRandom=true,MASQFullyRandom=false,RestoreSupportsLock=".
+
++                   in a comma separated list with no spaces, example; "SNATFullyRandom=true,MASQFullyRandom=false,RestoreSupportsLock=".  "true"
+
+-                   "true" or "false" will force the feature, empty or omitted values
+
++                   or "false" will force the feature, empty or omitted values are auto-detected.
+
+-                   are auto-detected.
+
++                 type: string
+
++               featureGates:
+
++                 description: FeatureGates is used to enable or disable tech-preview
+
++                   Calico features. Values are specified in a comma separated list
+
++                   with no spaces, example; "BPFConnectTimeLoadBalancingWorkaround=enabled,XyZ=false".
+
++                   This is used to enable features that are not fully production ready.
+
+-                   floating IP addresses.
+
++                   non-OpenStack floating IP addresses.  (OpenStack-derived floating
+
++                   IPs are always programmed, regardless of this setting.)
+
++               healthTimeoutOverrides:
+
++                 description: HealthTimeoutOverrides allows the internal watchdog timeouts
+
++                   of individual subcomponents to be overriden.  This is useful for
+
++                   working around "false positive" liveness timeouts that can occur
+
++                   in particularly stressful workloads or if CPU is constrained.  For
+
++                   a list of active subcomponents, see Felix's logs.
+
++                 items:
+
++                   properties:
+
++                     name:
+
++                       type: string
+
++                     timeout:
+
++                       type: string
+
++                   required:
+
++                   - name
+
++                   - timeout
+
++                   type: object
+
++                 type: array
+
+-                   be used. The default is legacy.
+
++                   be used. The default is Auto.
+
+-           image: docker.io/calico/cni:v3.24.5
+
++           image: docker.io/calico/cni:v3.25.0
+
+-           image: docker.io/calico/cni:v3.24.5
+
++           image: docker.io/calico/cni:v3.25.0
+
+-           image: docker.io/calico/node:v3.24.5
+
++           image: docker.io/calico/node:v3.25.0
+
+-           image: docker.io/calico/node:v3.24.5
+
++           image: docker.io/calico/node:v3.25.0
+
+-           image: docker.io/calico/kube-controllers:v3.24.5
+
++           image: docker.io/calico/kube-controllers:v3.25.0
+
+#############################################################
 ################### Differences between v3.25.0 and v3.25.1:######################
 -           image: docker.io/calico/cni:v3.25.0
 

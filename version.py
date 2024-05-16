@@ -1,6 +1,8 @@
 import requests
 from packaging import version
 
+BASE_VERSION = "3.23.4"
+
 def get_calico_versions(api_url):
     # Send a GET request to the GitHub API
     response = requests.get(api_url)
@@ -10,7 +12,7 @@ def get_calico_versions(api_url):
     if not isinstance(releases, list):
         raise ValueError("Invalid API response")
     
-    min_version = version.parse("3.25.0")
+    min_version = version.parse(BASE_VERSION)
     valid_versions = []
 
     # Loop through each release and filter based on version

@@ -2,6 +2,8 @@ import requests
 import os
 from packaging import version
 
+BASE_VERSION = "v3.24.0"
+
 def get_calico_versions(api_url):
     response = requests.get(api_url)
     releases = response.json()
@@ -9,7 +11,7 @@ def get_calico_versions(api_url):
     if not isinstance(releases, list):
         raise ValueError("Invalid API response")
     
-    min_version = version.parse("3.25.0")
+    min_version = version.parse(BASE_VERSION)
     valid_versions = []
 
     for release in releases:
